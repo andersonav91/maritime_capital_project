@@ -60,7 +60,9 @@
                 <div class="col">
                   <h5>Charts</h5>
                   <div class="card chart-container">
-                    <canvas id="chart"></canvas>
+                    <canvas id="pie-chart"></canvas>
+                    <hr/>
+                    <canvas id="bar-chart"></canvas>
                   </div>
                 </div>
                 <div class="col">
@@ -75,7 +77,7 @@
   </div>
 </div>
 <script>
-    const ctx = document.getElementById("chart").getContext('2d');
+    const ctx = document.getElementById("pie-chart").getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'pie',
         data: {
@@ -90,7 +92,6 @@
         options: {
             responsive: true,
             legend: {
-                position: 'right',
                 labels: {
                     padding: 20,
                     boxWidth: 10
@@ -99,6 +100,37 @@
             title: {
                 display: true,
                 text: 'Transaction Types Distribution'
+            }
+        }
+    });
+
+    var ctxB = document.getElementById("bar-chart").getContext('2d');
+    var myBarChart = new Chart(ctxB, {
+        type: 'bar',
+        data: {
+            labels: <%= raw @transaction_types.keys %>,
+            datasets: [{
+                label: 'Notional amount ',
+                data: <%= @transaction_types.map { |k, v| @statistics[:sum][k.to_sym][v] } %>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Notional amount By Transaction Types'
             }
         }
     });

@@ -5,8 +5,13 @@ class TradesController < ApplicationController
     trades_filter = Trade.where(params[:filters])
     @trades = trades_filter.page(params[:page]).per(25)
     @statistics = {}
+
     @statistics[:total_rows] = Hash[@transaction_types.map do |k, v|
       [k.to_sym, trades_filter.where(transaction_type_id: v).count]
+    end]
+
+    @statistics[:sum] = Hash[@transaction_types.map do |k, v|
+      [k.to_sym, trades_filter.where(transaction_type_id: v).group(:transaction_type_id).sum(:notional_amount)]
     end]
   end
 end
