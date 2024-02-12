@@ -43,7 +43,7 @@
                         <td class="text-center"><%= trade.transaction_type.code %></td>
                         <td><%= trade.trade_price %></td>
                         <td><%= trade.trade_yield %></td>
-                        <td><%= trade.par_traded %></td>
+                        <td><%= number_to_currency(trade.par_traded) %></td>
                         <td><%= number_to_currency(trade.notional_amount) %></td>
                       </tr>
                   <% end %>
@@ -63,10 +63,53 @@
                     <canvas id="pie-chart"></canvas>
                     <hr/>
                     <canvas id="bar-chart"></canvas>
+                    <hr/>
+                    <div class="p-1">
+                      <% TransactionType.all.each do |tt|%>
+                        <p class="fs-6"><b><%= tt.code %>:</b> <%= tt.name %>, <%= tt.description %></p>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
                 <div class="col">
                   <h5>Summary</h5>
+                  <p class="fs-6 mt-3">Total rows by Transaction Type</p>
+                  <ul class="list-group">
+                    <% @transaction_types.each do |k, v| %>
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <%= k %>
+                        <span class="badge bg-primary rounded-pill fs-6 fw-bold"><%= @statistics[:total_rows][k.to_sym] %></span>
+                      </li>
+                    <% end %>
+                  </ul>
+
+                  <p class="fs-6 mt-3">Other Statistics</p>
+                  <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Total sum of Notional amount
+                      <span class="badge bg-primary rounded-pill fs-6 fw-bold"><%= number_to_currency(@statistics[:notional_amount_sum]) %></span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Max Trade Date
+                      <span class="badge bg-primary rounded-pill fs-6 fw-bold"><%= @statistics[:max_trade_date] %></span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Min Trade Date
+                      <span class="badge bg-primary rounded-pill fs-6 fw-bold"><%= @statistics[:min_trade_date] %></span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Trade Price Average
+                      <span class="badge bg-primary rounded-pill fs-6 fw-bold"><%= number_to_currency(@statistics[:trade_price_avg]) %></span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Par Traded Average
+                      <span class="badge bg-primary rounded-pill fs-6 fw-bold"><%= number_to_currency(@statistics[:par_traded_avg]) %></span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
