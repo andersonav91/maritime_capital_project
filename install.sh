@@ -31,6 +31,8 @@ sudo apt install -y yarn
 
 # install rails
 gem install rails
+gem install bundle
+bundle install
 
 # migrate models and data
 rails db:migrate
