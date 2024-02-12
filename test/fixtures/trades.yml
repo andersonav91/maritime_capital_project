@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  trade_date: 2024-02-11
+  trade_date_time: 2024-02-11 19:40:15
+  row_id: MyString
+  security_id: MyString
+  security_name: MyString
+  coupon_rate: 1.5
+  maturity_date: 2024-02-11
+  transaction_type: one
+  trade_price: 1.5
+  trade_yield: 1
+  par_traded: 1
+  notional_amount: 1.5
+
+two:
+  trade_date: 2024-02-11
+  trade_date_time: 2024-02-11 19:40:15
+  row_id: MyString
+  security_id: MyString
+  security_name: MyString
+  coupon_rate: 1.5
+  maturity_date: 2024-02-11
+  transaction_type: two
+  trade_price: 1.5
+  trade_yield: 1
+  par_traded: 1
+  notional_amount: 1.5
