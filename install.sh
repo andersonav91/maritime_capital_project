@@ -27,7 +27,10 @@ fi
 
 # install node
 sudo apt install -y nodejs
-sudo apt install -y yarn
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/yarn.gpg
+echo "deb [signed-by=/etc/apt/trusted.gpg.d/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt update
+sudo apt install yarn
 
 # install rails
 gem install rails
@@ -38,8 +41,8 @@ bundle install
 rails db:migrate
 rails db:seed
 
-# migrate data from CSV
-# pending
+# compile assets
+rake assets:precompile
 
 # execute app
 rails s -b 0.0.0.0
