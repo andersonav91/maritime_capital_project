@@ -1,9 +1,12 @@
 class TradesController < ApplicationController
   def index
     @transaction_types = TransactionType.mapped_transaction_types
+    trades_filter = Trade
 
-    trades_filter = Trade.where(params[:filters])
-    @trades = trades_filter.page(params[:page]).per(25)
+    non_empty_filters = params.dig(:filters)&.reject { |_, value| value.blank? }
+    trades_list_filter = trades_filter.where(non_empty_filters&.permit(:row_id, :security_id, :security_name, :trade_date, :transaction_type_id))
+
+    @trades = trades_list_filter.page(params[:page]).per(25)
     @statistics = {}
 
     @statistics[:total_rows] = Hash[@transaction_types.map do |k, v|

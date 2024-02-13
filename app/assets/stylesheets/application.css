@@ -21,7 +21,10 @@
     text-decoration: none;
     background-color: white;
     border: 1px solid #DDD;
-    border-left-width: 0;
+}
+
+.table-responsive {
+    overflow-x: hidden !important;
 }
 
 .pagination {
@@ -54,7 +57,5 @@
 }
 
 .chart-container {
-    width: 50%;
-    height: 50%;
     margin: auto;
 }

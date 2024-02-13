@@ -13,6 +13,38 @@
             <div class="col">
               <div class="table-responsive">
                 <h3>Trades List</h3>
+
+                <%= form_tag('index', method: 'get', id: 'filters-form') do %>
+                  <div class="row g-3 mt-3 mb-3 align-items-end">
+                    <div class="col-sm-2">
+                      <%= label_tag 'filters[row_id]', "Row Id", class: "form-label" %>
+                      <%= text_field_tag 'filters[row_id]', params.dig(:filters, :row_id), class: "form-control", placeholder: "Row Id", aria: { label: "Row Id" } %>
+                    </div>
+                    <div class="col-sm-2">
+                      <%= label_tag 'filters[security_id]', "Security Id", class: "form-label" %>
+                      <%= text_field_tag 'filters[security_id]', params.dig(:filters, :security_id), class: "form-control", placeholder: "Security Id", aria: { label: "Security Id" } %>
+                    </div>
+                    <div class="col-sm-2">
+                      <%= label_tag 'filters[security_name]', "Security Name", class: "form-label" %>
+                      <%= text_field_tag 'filters[security_name]', params.dig(:filters, :security_name), class: "form-control", placeholder: "Security Name", aria: { label: "Security Name" } %>
+                    </div>
+                    <div class="col-sm-2">
+                      <%= label_tag 'filters[trade_date]', "Trade Date", class: "form-label" %>
+                      <%= date_field_tag 'filters[trade_date]', params.dig(:filters, :trade_date), class: "form-control", placeholder: "Trade Date", aria: { label: "Trade Date" } %>
+                    </div>
+                    <div class="col-sm-2">
+                      <%= label_tag 'filters[transaction_type_id]', "Transaction Type", class: "form-label" %>
+                      <%= select_tag 'filters[transaction_type_id]', options_from_collection_for_select(TransactionType.all, "id", "name", params.dig(:filters, :transaction_type_id)), include_blank: "Choose..." , class: "form-select", id: "transaction_type" %>
+                    </div>
+                    <div class="col-sm-1">
+                      <%= button_tag "Submit", type: "submit", class: "btn btn-primary" %>
+                    </div>
+                    <div class="col-sm-1">
+                      <%= button_tag "Clear", type: "reset", id: 'clear-form', class: "btn btn-secondary" %>
+                    </div>
+                  </div>
+                <% end %>
+
                 <table class="table table-striped table-sm table-bordered">
                   <thead>
                   <tr class="text-center">
@@ -120,61 +152,66 @@
   </div>
 </div>
 <script>
-    const ctx = document.getElementById("pie-chart").getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: <%= raw @transaction_types.keys.map { |v| "#{v}: #{@statistics[:total_rows][v.to_sym]}" } %>,
-            datasets: [{
-                label: 'Transaction Types',
-                backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1"],
-                hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5"],
-                data: <%= @transaction_types.keys.map { |v| @statistics[:total_rows][v.to_sym] } %>,
-            }]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                labels: {
-                    padding: 20,
-                    boxWidth: 10
-                }
-            },
-            title: {
-                display: true,
-                text: 'Transaction Types Distribution'
-            }
-        }
-    });
 
-    var ctxB = document.getElementById("bar-chart").getContext('2d');
-    var myBarChart = new Chart(ctxB, {
-        type: 'bar',
-        data: {
-            labels: <%= raw @transaction_types.keys %>,
-            datasets: [{
-                label: 'Notional amount ',
-                data: <%= @transaction_types.map { |k, v| @statistics[:sum][k.to_sym][v] } %>,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Notional amount By Transaction Types'
-            }
-        }
-    });
+  $("#clear-form").on("click", function() {
+      window.location.href = $("#filters-form").attr("action");
+  });
+
+  const ctx = document.getElementById("pie-chart").getContext('2d');
+  const myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: <%= raw @transaction_types.keys.map { |v| "#{v}: #{@statistics[:total_rows][v.to_sym]}" } %>,
+          datasets: [{
+              label: 'Transaction Types',
+              backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1"],
+              hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5"],
+              data: <%= @transaction_types.keys.map { |v| @statistics[:total_rows][v.to_sym] } %>,
+          }]
+      },
+      options: {
+          responsive: true,
+          legend: {
+              labels: {
+                  padding: 20,
+                  boxWidth: 10
+              }
+          },
+          title: {
+              display: true,
+              text: 'Transaction Types Distribution'
+          }
+      }
+  });
+
+  var ctxB = document.getElementById("bar-chart").getContext('2d');
+  var myBarChart = new Chart(ctxB, {
+      type: 'bar',
+      data: {
+          labels: <%= raw @transaction_types.keys %>,
+          datasets: [{
+              label: 'Notional amount ',
+              data: <%= @transaction_types.map { |k, v| @statistics[:sum][k.to_sym][v] } %>,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          title: {
+              display: true,
+              text: 'Notional amount By Transaction Types'
+          }
+      }
+  });
 </script>
