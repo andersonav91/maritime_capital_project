@@ -1,24 +1,49 @@
-# README
+# maritime_capital_project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a README file for the maritime_capital_project.
 
-Things you may want to cover:
+## Installation
 
-* Ruby version
+To install the project, follow these steps:
 
-* System dependencies
+1. Clone the repository:
 
-* Configuration
+   ```bash
+   git clone https://github.com/andersonav91/maritime_capital_project
 
-* Database creation
+2. Enter to the project:
 
-* Database initialization
+   ```bash
+   cd maritime_capital_project
 
-* How to run the test suite
+3. Install the project and dependencies and start it:
 
-* Services (job queues, cache servers, search engines, etc.)
+   ```bash
+   ./install.rb
 
-* Deployment instructions
+If you encounter any issues during the installation process, please try running the commands manually. Here are the steps you can take:
 
-* ...
+- Check if all dependencies are installed.
+- Ensure that the necessary permissions are set for the installation script.
+- Verify that the environment is correctly configured.
+
+## Technology Stack
+This project utilizes the following technologies:
+
+- SQL: The project uses SQL for database management.
+- Bootstrap: Bootstrap is used for styling and front-end components.
+- Rails 7: The project is built using Ruby on Rails version 7.
+
+## Tested Environment
+
+This project has been tested on Ubuntu.
+
+## Some Screenshots
+
+![Example 1](examples/example_1.png)
+
+![Example 1](examples/example_2.png)
+
+![Example 1](examples/example_3.png)
+
+Developed by Anderson Alvarez Vásquez (andersonav91@gmail.com).

@@ -45,4 +45,4 @@ rails db:seed
 rake assets:precompile
 
 # execute app
-rails s -b 0.0.0.0
+rails s -b 0.0.0.0 -e development
