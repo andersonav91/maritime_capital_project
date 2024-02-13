@@ -42,8 +42,8 @@ This project has been tested on Ubuntu.
 
 ![Example 1](examples/example_1.png)
 
-![Example 1](examples/example_2.png)
+![Example 2](examples/example_2.png)
 
-![Example 1](examples/example_3.png)
+![Example 3](examples/example_3.png)
 
 Developed by Anderson Alvarez Vásquez (andersonav91@gmail.com).
